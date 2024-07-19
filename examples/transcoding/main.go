@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/asticode/go-astiav"
+	"github.com/Tryanks/astiav-rockchip"
 	"github.com/asticode/go-astikit"
 )
 
