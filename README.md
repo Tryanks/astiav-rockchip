@@ -1,11 +1,6 @@
-[![GoReportCard](http://goreportcard.com/badge/github.com/asticode/go-astiav)](http://goreportcard.com/report/github.com/asticode/go-astiav)
-[![GoDoc](https://godoc.org/github.com/asticode/go-astiav?status.svg)](https://godoc.org/github.com/asticode/go-astiav)
-[![Test](https://github.com/asticode/go-astiav/actions/workflows/test.yml/badge.svg)](https://github.com/asticode/go-astiav/actions/workflows/test.yml)
-[![Coveralls](https://coveralls.io/repos/github/asticode/go-astiav/badge.svg?branch=master)](https://coveralls.io/github/asticode/go-astiav)
+`astiav-rockchip` is fork from a Golang library `go-astiav` providing C bindings for [ffmpeg-rockchip](https://github.com/nyanmisaka/ffmpeg-rockchip)
 
-`astiav` is a Golang library providing C bindings for [ffmpeg](https://github.com/FFmpeg/FFmpeg)
-
-It's only compatible with `ffmpeg` `n6.1.1`.
+It's only compatible with `ffmpeg-rochckip`.
 
 Its main goals are to:
 
@@ -34,24 +29,8 @@ Examples are located in the [examples](examples) directory and mirror as much as
 
 # Install ffmpeg from source
 
-If you don't know how to install `ffmpeg`, you can use the following to install it from source:
+https://github.com/nyanmisaka/ffmpeg-rockchip/wiki/Compilation
 
-```sh
-$ make install-ffmpeg
-```
+# Why astiav-rockchip?
 
-`ffmpeg` will be built from source in a directory named `tmp` and located in you working directory
-
-For your GO code to pick up `ffmpeg` dependency automatically, you'll need to add the following environment variables:
-
-(don't forget to replace `{{ path to your working directory }}` with the absolute path to your working directory)
-
-```sh
-export CGO_LDFLAGS="-L{{ path to your working directory }}/tmp/n6.1.1/lib/",
-export CGO_CFLAGS="-I{{ path to your working directory }}/tmp/n6.1.1/include/",
-export PKG_CONFIG_PATH="{{ path to your working directory }}/tmp/n6.1.1/lib/pkgconfig",
-```
-
-# Why astiav?
-
-After maintaining for several years the most starred [fork](https://github.com/asticode/goav) of [goav](https://github.com/giorgisio/goav), I've decided to write from scratch my own C bindings to fix most of the problems I still encountered using `goav`.
+After several months of continuous effort and failure, I almost gave up on further development of [go-rkcodec](github.com/Tryanks/go-rkcodec). Now, I want to adapt the code to ffmpeg-rockchip.
