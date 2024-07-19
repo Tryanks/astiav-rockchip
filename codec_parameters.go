@@ -93,6 +93,17 @@ func (cp *CodecParameters) ColorTransferCharacteristic() ColorTransferCharacteri
 	return ColorTransferCharacteristic(cp.c.color_trc)
 }
 
+func (cp *CodecParameters) ExtraData() []byte {
+	return bytesFromC(func(size *C.size_t) *C.uint8_t {
+		*size = C.size_t(cp.c.extradata_size)
+		return cp.c.extradata
+	})
+}
+
+func (cp *CodecParameters) SetExtraData(b []byte) error {
+	return setBytesWithIntSizeInC(b, &cp.c.extradata, &cp.c.extradata_size)
+}
+
 func (cp *CodecParameters) FrameSize() int {
 	return int(cp.c.frame_size)
 }
@@ -111,6 +122,10 @@ func (cp *CodecParameters) SetHeight(h int) {
 
 func (cp *CodecParameters) Level() Level {
 	return Level(cp.c.level)
+}
+
+func (cp *CodecParameters) SetLevel(l Level) {
+	cp.c.level = C.int(l)
 }
 
 func (cp *CodecParameters) MediaType() MediaType {
@@ -133,12 +148,20 @@ func (cp *CodecParameters) Profile() Profile {
 	return Profile(cp.c.profile)
 }
 
+func (cp *CodecParameters) SetProfile(p Profile) {
+	cp.c.profile = C.int(p)
+}
+
 func (cp *CodecParameters) SampleAspectRatio() Rational {
 	return newRationalFromC(cp.c.sample_aspect_ratio)
 }
 
 func (cp *CodecParameters) SetSampleAspectRatio(r Rational) {
 	cp.c.sample_aspect_ratio = r.c
+}
+
+func (cp *CodecParameters) SideData() *PacketSideData {
+	return newPacketSideDataFromC(&cp.c.coded_side_data, &cp.c.nb_coded_side_data)
 }
 
 func (cp *CodecParameters) SampleFormat() SampleFormat {

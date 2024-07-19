@@ -41,6 +41,7 @@ AVChannelLayout *c2goChannelLayout7Point1Point4Back = &(AVChannelLayout)AV_CHANN
 AVChannelLayout *c2goChannelLayoutHexadecagonal     = &(AVChannelLayout)AV_CHANNEL_LAYOUT_HEXADECAGONAL;
 AVChannelLayout *c2goChannelLayoutStereoDownmix     = &(AVChannelLayout)AV_CHANNEL_LAYOUT_STEREO_DOWNMIX;
 AVChannelLayout *c2goChannelLayout22Point2          = &(AVChannelLayout)AV_CHANNEL_LAYOUT_22POINT2;
+AVChannelLayout *c2goChannelLayout7Point1TopBack    = &(AVChannelLayout)AV_CHANNEL_LAYOUT_7POINT1_TOP_BACK;
 
 */
 import "C"
@@ -83,6 +84,7 @@ var (
 	ChannelLayoutHexadecagonal     = newChannelLayoutFromC(C.c2goChannelLayoutHexadecagonal)
 	ChannelLayoutStereoDownmix     = newChannelLayoutFromC(C.c2goChannelLayoutStereoDownmix)
 	ChannelLayout22Point2          = newChannelLayoutFromC(C.c2goChannelLayout22Point2)
+	ChannelLayout7Point1TopBack    = newChannelLayoutFromC(C.c2goChannelLayout7Point1TopBack)
 )
 
 type ChannelLayout struct {
@@ -107,9 +109,12 @@ func (l ChannelLayout) String() string {
 }
 
 func (l ChannelLayout) Describe(b []byte) (int, error) {
-	ret := C.av_channel_layout_describe(l.c, (*C.char)(unsafe.Pointer(&b[0])), cUlong(len(b)))
+	ret := C.av_channel_layout_describe(l.c, (*C.char)(unsafe.Pointer(&b[0])), C.size_t(len(b)))
 	if ret < 0 {
 		return 0, newError(ret)
+	}
+	if ret > 0 && b[ret-1] == '\x00' {
+		ret -= 1
 	}
 	return int(ret), nil
 }

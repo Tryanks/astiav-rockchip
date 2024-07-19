@@ -4,7 +4,7 @@ package astiav
 //#include <libavcodec/avcodec.h>
 import "C"
 
-type CodecContextFlag int
+type CodecContextFlag int64
 
 // https://github.com/FFmpeg/FFmpeg/blob/n5.0/libavcodec/avcodec.h#L206
 const (
@@ -27,7 +27,7 @@ const (
 	CodecContextFlagClosedGop     = CodecContextFlag(C.AV_CODEC_FLAG_CLOSED_GOP)
 )
 
-type CodecContextFlag2 int
+type CodecContextFlag2 int64
 
 // https://github.com/FFmpeg/FFmpeg/blob/n5.0/libavcodec/avcodec.h#L287
 const (
@@ -40,4 +40,5 @@ const (
 	CodecFlag2ExportMvs   = CodecContextFlag2(C.AV_CODEC_FLAG2_EXPORT_MVS)
 	CodecFlag2SkipManual  = CodecContextFlag2(C.AV_CODEC_FLAG2_SKIP_MANUAL)
 	CodecFlag2RoFlushNoop = CodecContextFlag2(C.AV_CODEC_FLAG2_RO_FLUSH_NOOP)
+	CodecFlag2IccProfiles = CodecContextFlag2(C.AV_CODEC_FLAG2_ICC_PROFILES)
 )

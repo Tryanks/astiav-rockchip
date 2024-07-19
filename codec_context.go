@@ -128,6 +128,17 @@ func (cc *CodecContext) ColorTransferCharacteristic() ColorTransferCharacteristi
 	return ColorTransferCharacteristic(cc.c.color_trc)
 }
 
+func (cc *CodecContext) ExtraData() []byte {
+	return bytesFromC(func(size *C.size_t) *C.uint8_t {
+		*size = C.size_t(cc.c.extradata_size)
+		return cc.c.extradata
+	})
+}
+
+func (cc *CodecContext) SetExtraData(b []byte) error {
+	return setBytesWithIntSizeInC(b, &cc.c.extradata, &cc.c.extradata_size)
+}
+
 func (cc *CodecContext) Flags() CodecContextFlags {
 	return CodecContextFlags(cc.c.flags)
 }
@@ -176,6 +187,10 @@ func (cc *CodecContext) Level() Level {
 	return Level(cc.c.level)
 }
 
+func (cc *CodecContext) SetLevel(l Level) {
+	cc.c.level = C.int(l)
+}
+
 func (cc *CodecContext) MediaType() MediaType {
 	return MediaType(cc.c.codec_type)
 }
@@ -190,6 +205,10 @@ func (cc *CodecContext) SetPixelFormat(pixFmt PixelFormat) {
 
 func (cc *CodecContext) Profile() Profile {
 	return Profile(cc.c.profile)
+}
+
+func (cc *CodecContext) SetProfile(p Profile) {
+	cc.c.profile = C.int(p)
 }
 
 func (cc *CodecContext) Qmin() int {
